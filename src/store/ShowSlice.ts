@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {fetchSearchShow} from '../Components/Shows/ShowThunks';
+import {fetchSearchShow, fetchShowInfo} from '../Components/Shows/ShowThunks';
 
 const initialState = {
   results: [],
@@ -25,6 +25,9 @@ const showSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchSearchShow.fulfilled, (state: showJson, action: PayloadAction<showJson>) => {
       state.results = action.payload
+    })
+    builder.addCase(fetchShowInfo.fulfilled, (state:showJson, action) => {
+      state.selectedShow = action.payload
     })
   }
 });

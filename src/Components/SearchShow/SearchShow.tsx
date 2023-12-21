@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import axiosApi from '../../axiosApi';
 import {Link} from 'react-router-dom';
 
-const URL = 'http://api.tvmaze.com/shows/';
-
-const SearchShow = ({onShowSelect}) => {
+const SearchShow = () => {
   const [query, setQuery] = useState('');
   const [options, setOptions] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,12 +25,6 @@ const SearchShow = ({onShowSelect}) => {
     void fetchData();
   }, [query]);
 
-  const handleSelectOption = (selectedShow) => {
-    setQuery('');
-    setOptions([]);
-    onShowSelect(selectedShow);
-  };
-
   return (
     <div className="header">
       <div className="logo">
@@ -45,11 +38,12 @@ const SearchShow = ({onShowSelect}) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for a TV show"
+          onClick={() => setIsFocused(!isFocused)}
         />
-        {options.length > 0 && (
+        {options.length > 0 && isFocused &&(
           <div className="search-results">
             {options.map((option) => (
-              <Link className="option" to={"shows/" + option.id} key={option.id} onClick={() => handleSelectOption(option)}>
+              <Link className="option" to={'shows/' + option.id} key={option.id}>
                 {option.name}
               </Link>
             ))}

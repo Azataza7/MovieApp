@@ -2,8 +2,8 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
   background-color: #242424;
+  color: white;
 }
 
 .logo {
@@ -34,7 +34,7 @@
 .search-form input {
   width: 54%;
   background: #242424 url("./images/search-icon.svg") no-repeat 5px 5px;
-
+  border: none;
   padding: 5px 5px 5px 30px;
 }
 
@@ -45,6 +45,7 @@
   width: 43%;
   max-height: 220px;
   overflow-y: scroll;
+  border: 1px solid transparent;
 }
 
 .search-results .option {
@@ -54,4 +55,38 @@
   font-size: 13px;
   color: mediumaquamarine;
   text-decoration: none;
+}
+
+.card-film-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-img {
+  flex-basis: 25%;
+}
+
+.card-info {
+  flex-basis: 61%;
+  position: relative;
+}
+
+.rating {
+  position: absolute;
+  top: 0;
+  right: 10px;
+
+  border: 1px solid green;
+  border-radius: 10px;
+  padding: 4px 10px 4px 25px;
+  background: green url("./images/rate-star.svg") no-repeat top 4px left 1px;
+}
+
+.category {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 6px;
+  border: 1px solid mediumaquamarine;
+  border-radius: 10px;
 }
