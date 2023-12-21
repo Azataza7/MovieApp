@@ -19,9 +19,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 60px 0 ;
+  padding: 0 0 40px 0 ;
 
   position: relative;
+  border-bottom: 1px solid green;
+  margin-bottom: 20px;
 }
 
 .search-form {
@@ -33,7 +35,7 @@
 
 .search-form input {
   width: 54%;
-  background: #242424 url("./images/search-icon.svg") no-repeat 5px 5px;
+  background: #242424 url("../images/search-icon.svg") no-repeat 5px 5px;
   border: none;
   padding: 5px 5px 5px 30px;
 }
@@ -46,15 +48,22 @@
   max-height: 220px;
   overflow-y: scroll;
   border: 1px solid transparent;
+  z-index: 2;
+  background-color: lightgrey;
+  opacity: 0.75;
+  padding: 5px;
+
+  border-radius: 10px;
 }
 
 .search-results .option {
   display: block;
   padding: 5px;
 
-  font-size: 13px;
-  color: mediumaquamarine;
+  font-size: 16px;
   text-decoration: none;
+  font-weight: 600;
+  color: black;
 }
 
 .card-film-container {
@@ -73,13 +82,13 @@
 
 .rating {
   position: absolute;
-  top: 0;
-  right: 10px;
+  top: 9px;
+  left: 10px;
 
   border: 1px solid green;
   border-radius: 10px;
   padding: 4px 10px 4px 25px;
-  background: green url("./images/rate-star.svg") no-repeat top 4px left 1px;
+  background: green url("../images/rate-star.svg") no-repeat top 4px left 1px;
 }
 
 .category {
@@ -89,4 +98,15 @@
   gap: 6px;
   border: 1px solid mediumaquamarine;
   border-radius: 10px;
+}
+
+.card-img {
+  position: relative;
+}
+
+.preloader {
+  position: absolute;
+  top: 46%;
+  left: 46%;
+  padding: 40px;
 }

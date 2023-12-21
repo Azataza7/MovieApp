@@ -1,38 +1,49 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {fetchSearchShow, fetchShowInfo} from '../Components/Shows/ShowThunks';
+import {showResponse, showTemplate} from '../types';
 
-const initialState = {
+interface showJson extends showTemplate {
   results: [],
-  selectedShow: {}
-};
-
-interface showJson {
-  results: [],
-  selectedShow: {}
+  selectedShow: {},
+  image: { medium: string };
+  rating: { average: number };
+  isLoading: boolean;
 }
+
+interface initialStateType {
+  results: showTemplate[];
+  selectedShow: showJson;
+}
+
+const initialState: initialStateType = {
+  results: [],
+  selectedShow: {} as showJson,
+};
 
 const showSlice = createSlice({
   name: 'shows',
   initialState,
   reducers: {
-    setResult(state, action: PayloadAction) {
+    setResult(state, action: PayloadAction<showTemplate[]>) {
       state.results = action.payload;
-    },
-    setSelectedShow(state, action: PayloadAction) {
-      state.selectedShow = action.payload
     }
   },
-  extraReducers: builder => {
-    builder.addCase(fetchSearchShow.fulfilled, (state: showJson, action: PayloadAction<showJson>) => {
-      state.results = action.payload
-    })
-    builder.addCase(fetchShowInfo.fulfilled, (state:showJson, action) => {
-      state.selectedShow = action.payload
-    })
-  }
+  extraReducers: (builder) => {
+    builder.addCase(fetchSearchShow.fulfilled, (state: showJson, action) => {
+      state.results = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchShowInfo.fulfilled, (state: showJson, action) => {
+      state.selectedShow = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchShowInfo.pending, (state: showJson) => {
+      state.isLoading = true;
+    });
+  },
 });
 
 export const showReducer = showSlice.reducer;
-export const { setResult, setSelectedShow} = showSlice.actions
-export const selectResult = state => state.shows.results
-export const selectSelectedShow = state => state.shows.selectedShow
+export const {setResult} = showSlice.actions;
+export const selectResult = (state: { shows: initialStateType }) => state.shows.results;
+export const selectSelectedShow = (state: { shows: initialStateType }) => state.shows.selectedShow;

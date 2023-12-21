@@ -10,3 +10,12 @@ export interface showTemplate {
   url: string;
   premiered: string;
 }
+
+export interface showJson extends showTemplate {
+  image: {medium: string}
+  rating: {average: number}
+}
+
+export interface showResponse {
+  data: showTemplate[showTemplate]
+}

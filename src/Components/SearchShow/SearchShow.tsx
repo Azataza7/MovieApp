@@ -1,29 +1,33 @@
 import React, {useState, useEffect} from 'react';
 import axiosApi from '../../axiosApi';
 import {Link} from 'react-router-dom';
+import {showResponse, showTemplate} from '../../types';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {selectResult, setResult} from '../../store/ShowSlice';
 
 const SearchShow = () => {
-  const [query, setQuery] = useState('');
-  const [options, setOptions] = useState([]);
+  const [userInput, setUserInput] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const options: showTemplate[] = useAppSelector(selectResult);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (query.trim() !== '') {
+      if (userInput.trim() !== '') {
         try {
-          const response = await axiosApi.get(query);
-          setOptions(response.data.map((result) => result.show));
+          const response: showResponse = await axiosApi.get(userInput);
+          dispatch(setResult(response.data.map((result) => result.show)));
         } catch (error) {
-          console.error('Error fetching autocomplete options:', error);
-          setOptions([]);
+          console.log('Error fetching options:', error);
+          dispatch(setResult([]));
         }
       } else {
-        setOptions([]);
+        dispatch(setResult([]));
       }
     };
 
     void fetchData();
-  }, [query]);
+  }, [dispatch, userInput]);
 
   return (
     <div className="header">
@@ -35,8 +39,8 @@ const SearchShow = () => {
       <div className="search-form">
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
           placeholder="Search for a TV show"
           onClick={() => setIsFocused(!isFocused)}
         />
